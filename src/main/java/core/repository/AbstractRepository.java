@@ -69,14 +69,37 @@ public abstract class AbstractRepository<T> {
 	
 	@SuppressWarnings("rawtypes")
 	public List findAll(String orderBy){
+		return getOrderedCriteria(orderBy).list();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List findPagedItems(String orderBy, Integer pageSize, Integer pageOffset){
+		return getPagedItemsCriteria(orderBy, pageSize, pageOffset).list();
+	}
+	
+	protected Criteria getOrderedCriteria(String orderBy){
 		Criteria criteria = createEntityCriteria();
 		if (orderBy != null) {
 			criteria.addOrder(Order.desc(orderBy));
 		}
 		
-		return criteria.list();
+		return criteria;
 	}
-
+	
+	protected Criteria getPagedItemsCriteria(String orderBy, Integer pageSize, Integer pageOffset){
+		Criteria criteria = getOrderedCriteria(orderBy);
+		
+		if (pageSize != null) {
+			criteria.setMaxResults(pageSize);
+		}
+		
+		if (pageOffset != null) {
+			int itemOffset = (pageSize * pageOffset);
+			criteria.setFirstResult(itemOffset);
+		}
+		return criteria;
+	}
+	
 	protected Criteria createEntityCriteria() {
 		return getSession().createCriteria(persistentClass);
 	}

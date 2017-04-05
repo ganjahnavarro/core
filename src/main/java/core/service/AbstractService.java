@@ -27,6 +27,11 @@ public abstract class AbstractService {
 		return getRepository().findAll(orderBy);
 	}
 	
+	@SuppressWarnings("rawtypes")
+	public List findPagedItems(String orderBy, Integer pageSize, Integer pageOffset){
+		return getRepository().findPagedItems(orderBy, pageSize, pageOffset);
+	}
+	
 	public void save(IRecord record) {
 		getRepository().persist(record);
 	}
