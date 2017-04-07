@@ -4,11 +4,14 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,8 @@ public abstract class AbstractRepository<T> {
 	@Autowired private SessionFactory sessionFactory;
 	
 	private final Class<T> persistentClass;
+	
+	protected abstract String getEntityName();
 
 	@SuppressWarnings("unchecked")
 	public AbstractRepository() {
@@ -37,14 +42,16 @@ public abstract class AbstractRepository<T> {
 		return (T) getSession().get(persistentClass, key);
 	}
 
-	public void persist(IRecord record) {
+	public IRecord persist(IRecord record) {
 		preProcess(record);
 		getSession().persist(record);
+		return record;
 	}
 
-	public void merge(IRecord record) {
+	public IRecord merge(IRecord record) {
 		preProcess(record);
 		getSession().merge(record);
+		return record;
 	}
 	
 	private void preProcess(IRecord record) {
@@ -53,12 +60,18 @@ public abstract class AbstractRepository<T> {
 	}
 
 	public void delete(IRecord record) {
-		getSession().delete(record);
+		try {
+			getSession().delete(record);
+		} catch (ConstraintViolationException e) {
+			record.setDeleted(true);
+			preProcess(record);
+			merge(record);
+		}
 	}
 	
-	public void deleteRecordById(String entityName, Integer id) {
-		Query query = getSession().createSQLQuery("delete from " + entityName + " where id = :id");
-		query.setInteger("id", id);
+	public void deleteRecordById(Long id) {
+		Query query = getSession().createSQLQuery("delete from " + getEntityName() + " where id = :id");
+		query.setLong("id", id);
 		query.executeUpdate();
 	}
 	
@@ -80,9 +93,10 @@ public abstract class AbstractRepository<T> {
 	protected Criteria getOrderedCriteria(String orderBy){
 		Criteria criteria = createEntityCriteria();
 		if (orderBy != null) {
-			criteria.addOrder(Order.desc(orderBy));
+			criteria.addOrder(Order.asc(orderBy));
 		}
 		
+		criteria.add(Restrictions.eqOrIsNull("deleted", false));
 		return criteria;
 	}
 	
@@ -103,5 +117,7 @@ public abstract class AbstractRepository<T> {
 	protected Criteria createEntityCriteria() {
 		return getSession().createCriteria(persistentClass);
 	}
+	
+	
 
 }

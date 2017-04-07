@@ -13,6 +13,9 @@ public interface IRecord extends Serializable {
 	
 	Date getModifiedDate();
 	void setModifiedDate(Date modifiedDate);
+	
+	Boolean getDeleted();
+	void setDeleted(Boolean deleted);
 
 	String getDisplayString();
 	

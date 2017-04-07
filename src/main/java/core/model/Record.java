@@ -18,6 +18,8 @@ public abstract class Record implements Serializable, IRecord {
 	private String modifiedBy;
 	private Date modifiedDate;
 
+	private Boolean deleted = false;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -43,5 +45,13 @@ public abstract class Record implements Serializable, IRecord {
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
-	
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+
 }

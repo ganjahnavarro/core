@@ -37,4 +37,9 @@ public class UserRepository extends AbstractRepository<User> {
 				.executeUpdate();
 	}
 
+	@Override
+	protected String getEntityName() {
+		return User.ENTITY_NAME;
+	}
+
 }

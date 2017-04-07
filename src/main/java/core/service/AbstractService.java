@@ -2,6 +2,9 @@ package core.service;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
+import org.jboss.logging.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import core.model.IRecord;
@@ -9,6 +12,8 @@ import core.repository.AbstractRepository;
 
 @Transactional
 public abstract class AbstractService {
+	
+	private static final Logger LOGGER = Logger.getLogger(AbstractService.class);
 	
 	@SuppressWarnings("rawtypes")
 	public abstract AbstractRepository getRepository();
@@ -32,16 +37,25 @@ public abstract class AbstractService {
 		return getRepository().findPagedItems(orderBy, pageSize, pageOffset);
 	}
 	
-	public void save(IRecord record) {
-		getRepository().persist(record);
+	public IRecord save(IRecord record) {
+		try {
+			return getRepository().persist(record);
+		} catch(ConstraintViolationException e) {
+			LOGGER.error("Error saving object", e);
+			throw e;
+		}
+	}
+	
+	public IRecord update(IRecord source) {
+		return getRepository().merge(source);
 	}
 	
 	public void delete(IRecord record) {
 		getRepository().delete(record);
 	}
 	
-	public void update(IRecord source) {
-		getRepository().merge(source);
+	public void deleteRecordById(Long id) {
+		getRepository().deleteRecordById(id);
 	}
 	
 }
