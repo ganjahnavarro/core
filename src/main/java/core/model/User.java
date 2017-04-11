@@ -42,9 +42,6 @@ public class User extends Record {
 	private byte[] image;
 	private String imageFileName;
 	
-	private String entryBy;
-	private Date entryDate;
-	
 	private String confirmationToken;
 	
 	@NotNull(message = "Type is required.")
@@ -195,8 +192,6 @@ public class User extends Record {
 		result = prime * result + ((confirmationToken == null) ? 0 : confirmationToken.hashCode());
 		result = prime * result + ((contactNo == null) ? 0 : contactNo.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((entryBy == null) ? 0 : entryBy.hashCode());
-		result = prime * result + ((entryDate == null) ? 0 : entryDate.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + Arrays.hashCode(image);

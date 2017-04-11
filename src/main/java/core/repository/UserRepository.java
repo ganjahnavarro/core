@@ -3,6 +3,7 @@ package core.repository;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -22,11 +23,22 @@ public class UserRepository extends AbstractRepository<User> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<User> findAllUsers(UserType... types) {
+	public List<User> find(UserType... types) {
 		Criteria criteria = createEntityCriteria();
 		criteria.add(Restrictions.in("type", types));
 		criteria.addOrder(Order.asc("lastName"));
 		return (List<User>) criteria.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> findFilteredItems(String filter, Integer pageSize, Integer pageOffset, String orderBy) {
+		Criteria criteria = getPagedItemsCriteria(pageSize, pageOffset, orderBy);
+		
+		if (filter != null && !filter.isEmpty()) {
+			criteria.add(Restrictions.ilike("lastName", filter, MatchMode.START));
+		}
+		
+		return criteria.list();
 	}
 	
 	public void activateUser(String token) {

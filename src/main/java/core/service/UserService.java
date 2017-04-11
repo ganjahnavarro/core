@@ -30,8 +30,12 @@ public class UserService extends AbstractService {
 		repository.activateUser(token);
 	}
 
-	public List<User> findAllUsers(UserType... types) {
-		return repository.findAllUsers(types);
+	public List<User> find(UserType... types) {
+		return repository.find(types);
+	}
+	
+	public List<User> findFilteredItems(String filter, Integer pageSize, Integer pageOffset, String orderBy) {
+		return repository.findFilteredItems(filter, pageSize, pageOffset, orderBy);
 	}
 
 }

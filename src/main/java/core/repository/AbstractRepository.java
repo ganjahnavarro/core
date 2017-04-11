@@ -38,8 +38,8 @@ public abstract class AbstractRepository<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public T findById(Integer key) {
-		return (T) getSession().get(persistentClass, key);
+	public T findById(Long id) {
+		return (T) getSession().get(persistentClass, id);
 	}
 
 	public IRecord persist(IRecord record) {
@@ -86,8 +86,8 @@ public abstract class AbstractRepository<T> {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public List findPagedItems(String orderBy, Integer pageSize, Integer pageOffset){
-		return getPagedItemsCriteria(orderBy, pageSize, pageOffset).list();
+	public List findPagedItems(Integer pageSize, Integer pageOffset, String orderBy){
+		return getPagedItemsCriteria(pageSize, pageOffset, orderBy).list();
 	}
 	
 	protected Criteria getOrderedCriteria(String orderBy){
@@ -100,7 +100,7 @@ public abstract class AbstractRepository<T> {
 		return criteria;
 	}
 	
-	protected Criteria getPagedItemsCriteria(String orderBy, Integer pageSize, Integer pageOffset){
+	protected Criteria getPagedItemsCriteria(Integer pageSize, Integer pageOffset, String orderBy){
 		Criteria criteria = getOrderedCriteria(orderBy);
 		
 		if (pageSize != null) {

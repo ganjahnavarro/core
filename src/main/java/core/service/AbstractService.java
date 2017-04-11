@@ -18,7 +18,7 @@ public abstract class AbstractService {
 	@SuppressWarnings("rawtypes")
 	public abstract AbstractRepository getRepository();
 	
-	public IRecord findById(Integer id) {
+	public IRecord findById(Long id) {
 		return (IRecord) getRepository().findById(id);
 	}
 	
@@ -33,8 +33,8 @@ public abstract class AbstractService {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public List findPagedItems(String orderBy, Integer pageSize, Integer pageOffset){
-		return getRepository().findPagedItems(orderBy, pageSize, pageOffset);
+	public List findPagedItems(Integer pageSize, Integer pageOffset, String orderBy){
+		return getRepository().findPagedItems(pageSize, pageOffset, orderBy);
 	}
 	
 	public IRecord save(IRecord record) {
