@@ -44,6 +44,8 @@ public abstract class AbstractRepository<T> {
 
 	public IRecord persist(IRecord record) {
 		preProcess(record);
+		record.setDeleted(false);
+		
 		getSession().persist(record);
 		return record;
 	}
@@ -90,13 +92,17 @@ public abstract class AbstractRepository<T> {
 		return getPagedItemsCriteria(pageSize, pageOffset, orderBy).list();
 	}
 	
-	protected Criteria getOrderedCriteria(String orderBy){
+	protected Criteria getDefaultCriteria() {
 		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eqOrIsNull("deleted", false));
+		return criteria;
+	}
+	
+	protected Criteria getOrderedCriteria(String orderBy){
+		Criteria criteria = getDefaultCriteria();
 		if (orderBy != null) {
 			criteria.addOrder(Order.asc(orderBy));
 		}
-		
-		criteria.add(Restrictions.eqOrIsNull("deleted", false));
 		return criteria;
 	}
 	

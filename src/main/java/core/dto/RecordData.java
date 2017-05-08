@@ -1,13 +1,11 @@
 package core.dto;
 
-import java.util.Date;
-
 public class RecordData {
 
 	private Long id;
 
 	private String modifiedBy;
-	private Date modifiedDate;
+	private String modifiedDate;
 
 	public Long getId() {
 		return id;
@@ -25,11 +23,11 @@ public class RecordData {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Date getModifiedDate() {
+	public String getModifiedDate() {
 		return modifiedDate;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 

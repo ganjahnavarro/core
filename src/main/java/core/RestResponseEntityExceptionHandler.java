@@ -25,6 +25,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 			for (ConstraintViolation<?> violation : validationException.getConstraintViolations()) {
 				message += violation.getMessage() + ". ";
 			}
+		} else {
+			message = exception.getMessage();
 		}
 		
 		RestException body = new RestException(exception.getClass().getSimpleName(), message);
