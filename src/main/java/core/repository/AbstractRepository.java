@@ -56,7 +56,7 @@ public abstract class AbstractRepository<T> {
 		return record;
 	}
 	
-	private void preProcess(IRecord record) {
+	protected void preProcess(IRecord record) {
 		record.setModifiedBy(Utility.getUser());
 		record.setModifiedDate(new Date());
 	}
