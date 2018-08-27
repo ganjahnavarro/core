@@ -20,7 +20,7 @@ import core.enums.UserType;
 @Entity(name = User.ENTITY_NAME)
 public class User extends Record {
 	
-	public static final String ENTITY_NAME = "applicationUser";
+	public static final String ENTITY_NAME = "userAccount";
 	private static final long serialVersionUID = 8438443391159451383L;
 
 	private UserType type = UserType.DEFAULT;
