@@ -24,5 +24,9 @@ public class ConfigService extends AbstractService {
 	public List<Config> findFilteredItems(String filter, Integer pageSize, Integer pageOffset, String orderBy) {
 		return repository.findFilteredItems(filter, pageSize, pageOffset, orderBy);
 	}
+	
+	public Config findByName(String name) {
+		return repository.findByName(name);
+	}
 
 }

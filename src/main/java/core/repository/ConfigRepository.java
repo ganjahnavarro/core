@@ -23,6 +23,12 @@ public class ConfigRepository extends AbstractRepository<Config> {
 		}
 		return criteria.list();
 	}
+	
+	public Config findByName(String name) {
+		Criteria criteria = getDefaultCriteria();
+		criteria.add(Restrictions.eq("name", name));
+		return (Config) criteria.uniqueResult();
+	}
 
 	@Override
 	protected String getEntityName() {
