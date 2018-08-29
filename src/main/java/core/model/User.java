@@ -44,7 +44,7 @@ public class User extends Record {
 	
 	private String confirmationToken;
 	
-	@NotNull(message = "Type is required.")
+	@NotNull(message = "Type is required")
 	@Enumerated(EnumType.STRING)
 	public UserType getType() {
 		return type;
@@ -54,7 +54,7 @@ public class User extends Record {
 		this.type = type;
 	}
 
-	@NotBlank(message = "Last name is required.")
+	@NotBlank(message = "Last name is required")
 	public String getLastName() {
 		return lastName;
 	}
@@ -63,7 +63,7 @@ public class User extends Record {
 		this.lastName = lastName;
 	}
 
-	@NotBlank(message = "First name is required.")
+	@NotBlank(message = "First name is required")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -123,7 +123,7 @@ public class User extends Record {
 	}
 
 	@Column(unique = true)
-	@NotBlank(message = "Username is required.")
+	@NotBlank(message = "Username is required")
 	public String getUserName() {
 		return userName;
 	}
@@ -132,7 +132,7 @@ public class User extends Record {
 		this.userName = userName;
 	}
 
-	@NotBlank(message = "Password is required.")
+	@NotBlank(message = "Password is required")
 	public String getPassword() {
 		return password;
 	}

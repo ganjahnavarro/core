@@ -16,7 +16,7 @@ public class Config extends Record {
 	private String name;
 	private String value;
 
-	@NotBlank(message = "Name is required.")
+	@NotBlank(message = "Name is required")
 	public String getName() {
 		return name;
 	}

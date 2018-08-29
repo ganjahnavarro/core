@@ -11,23 +11,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import core.dto.UserData;
-import core.dto.mapper.UserMapper;
-import core.model.User;
-import core.service.UserService;
+import core.dto.ConfigData;
+import core.dto.mapper.ConfigMapper;
+import core.model.Config;
+import core.service.ConfigService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/config")
+public class ConfigController {
 
 	@Autowired
-	private UserService service;
+	private ConfigService service;
 
-	private UserMapper MAPPER = UserMapper.INSTANCE;
+	private ConfigMapper MAPPER = ConfigMapper.INSTANCE;
 
 	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
-	public List<UserData> list(@RequestParam(value = "filter", required = false) String filter,
+	public List<ConfigData> list(@RequestParam(value = "filter", required = false) String filter,
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			@RequestParam(value = "pageOffset", required = false) Integer pageOffset,
 			@RequestParam(value = "orderedBy", required = false) String orderedBy) {
@@ -35,15 +35,15 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public UserData create(@RequestBody UserData userData) {
-		User user = MAPPER.fromData(userData);
-		return MAPPER.toData((User) service.save(user));
+	public ConfigData create(@RequestBody ConfigData configData) {
+		Config config = MAPPER.fromData(configData);
+		return MAPPER.toData((Config) service.save(config));
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.PATCH)
-	public UserData update(@RequestBody UserData userData) {
-		User user = MAPPER.fromData(userData);
-		return MAPPER.toData((User) service.update(user));
+	public ConfigData update(@RequestBody ConfigData configData) {
+		Config config = MAPPER.fromData(configData);
+		return MAPPER.toData((Config) service.update(config));
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

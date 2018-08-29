@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	public static final String BEAN_NAME = "customUserDetailsService";
 	
-	private @Autowired UserService userService;
+	@Autowired private UserService userService;
 	
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

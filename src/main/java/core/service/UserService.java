@@ -15,7 +15,7 @@ import core.repository.UserRepository;
 @Transactional
 public class UserService extends AbstractService {
 
-	@Autowired UserRepository repository;
+	@Autowired private UserRepository repository;
 	
 	@Override
 	public AbstractRepository<User> getRepository() {
