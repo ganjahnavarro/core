@@ -17,7 +17,6 @@ public interface UserMapper {
 	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
 	@Mapping(target = "modifiedDate", source = "modifiedDate", dateFormat = "MM/dd/yyyy HH:mm")
-	@Mapping(target = "birthDate", source = "birthDate", dateFormat = "MM/dd/yyyy HH:mm")
 	UserData toData(User user);
 	
 	@IterableMapping(dateFormat = "MM/dd/yyyy HH:mm")
