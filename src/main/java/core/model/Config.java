@@ -1,6 +1,7 @@
 package core.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotBlank;
@@ -33,6 +34,7 @@ public class Config extends Record {
 	}
 
 	@Override
+	@Transient
 	public String getDisplayString() {
 		return getName();
 	}
