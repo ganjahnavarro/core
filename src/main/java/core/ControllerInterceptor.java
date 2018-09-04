@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,18 +20,10 @@ public class ControllerInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		initializeServices();
-		
 		if(modelAndView != null && modelAndView.getModelMap() != null){
-			modelAndView.getModelMap().addAttribute("userName", Utility.getUser());
+			modelAndView.getModelMap().addAttribute("timestamp", new Date().getTime());
 		}
 		super.postHandle(request, response, handler, modelAndView);
-	}
-	
-	private void initializeServices() {
-		if(userService == null){
-			userService = Utility.getApplicationContext().getBean(UserService.class);
-		}
 	}
 	
 }

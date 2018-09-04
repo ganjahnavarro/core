@@ -22,6 +22,13 @@ public class UserRepository extends AbstractRepository<User> {
 		return (User) criteria.uniqueResult();
 	}
 	
+	public User findByCredentials(String userName, String password) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("userName", userName));
+		criteria.add(Restrictions.eq("password", password));
+		return (User) criteria.uniqueResult();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<User> find(UserType... types) {
 		Criteria criteria = createEntityCriteria();

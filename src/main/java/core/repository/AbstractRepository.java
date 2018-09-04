@@ -15,7 +15,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import core.Utility;
 import core.model.IRecord;
 
 @Transactional
@@ -57,7 +56,7 @@ public abstract class AbstractRepository<T> {
 	}
 	
 	protected void preProcess(IRecord record) {
-		record.setModifiedBy(Utility.getUser());
+		record.setModifiedBy(null);
 		record.setModifiedDate(new Date());
 	}
 

@@ -26,6 +26,10 @@ public class UserService extends AbstractService {
 		return repository.findByUsername(userName);
 	}
 	
+	public User findByCredentials(String userName, String password) {
+		return repository.findByCredentials(userName, password);
+	}
+	
 	public void activateUser(String token) {
 		repository.activateUser(token);
 	}
