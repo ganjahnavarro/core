@@ -2,6 +2,7 @@ package core;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +56,15 @@ public final class Utility implements ApplicationContextAware {
 	
 	public static String formatDate(Date date) {
 		return dateFormat.format(date);
+	}
+	
+	public static Date getCurrentDateWithoutTime() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
 	}
 
 }
