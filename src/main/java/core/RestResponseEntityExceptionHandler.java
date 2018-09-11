@@ -3,6 +3,7 @@ package core;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.jboss.logging.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	private static final Logger LOGGER = Logger.getLogger(RestResponseEntityExceptionHandler.class);
 
 	@ExceptionHandler(Exception.class)
 	protected ResponseEntity<Object> handleConflict(RuntimeException exception, WebRequest request) {
@@ -25,8 +28,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 			for (ConstraintViolation<?> violation : validationException.getConstraintViolations()) {
 				message += violation.getMessage() + ". ";
 			}
-		} else {
+		} else if (exception instanceof IllegalArgumentException) {
 			message = exception.getMessage();
+		} else {
+			String exceptionCode = exception.getClass().getSimpleName().replaceAll("[a-z]", "");
+			message = "An unexpected error has occured (" + exceptionCode + ").";
+			
+			LOGGER.error("An unexpected error has occured: " + exception.getMessage(), exception);
 		}
 		
 		RestException body = new RestException(exception.getClass().getSimpleName(), message);

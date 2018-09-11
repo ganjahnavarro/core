@@ -1,6 +1,7 @@
 package core;
 
-import java.text.Format;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +20,7 @@ import org.springframework.validation.FieldError;
 public final class Utility implements ApplicationContextAware {
 
 	private static ApplicationContext context;
-	private static Format dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	private static DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	public static ApplicationContext getApplicationContext() {
 		return context;
@@ -56,6 +57,17 @@ public final class Utility implements ApplicationContextAware {
 	
 	public static String formatDate(Date date) {
 		return dateFormat.format(date);
+	}
+	
+	public static Date parseDate(String dateString) {
+		try {
+			if (dateString != null && !dateString.isEmpty()) {
+				return dateFormat.parse(dateString);
+			}
+		} catch (ParseException e) {
+			throw new IllegalArgumentException("Invalid date format.");
+		}
+		return null;
 	}
 	
 	public static Date getCurrentDateWithoutTime() {

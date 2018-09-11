@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import core.Constants;
+import core.DummySession;
 import core.dto.CredentialsData;
 import core.dto.UserData;
 import core.dto.mapper.UserMapper;
@@ -31,6 +32,7 @@ public class ApplicationController extends AbstractController {
 		User user = service.findByCredentials(credentialsData.getUserName(), credentialsData.getPassword());
 		if (user != null && user.getActive()) {
 			session.setAttribute(Constants.ATTRIBUTE_LOGGED_USER, user);
+			DummySession.currentUser = user;
 			return MAPPER.toData(user);
 		}
 		throw new IllegalArgumentException("Invalid username and/or password.");

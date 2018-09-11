@@ -15,6 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import core.DummySession;
 import core.model.IRecord;
 
 @Transactional
@@ -56,7 +57,9 @@ public abstract class AbstractRepository<T> {
 	}
 	
 	protected void preProcess(IRecord record) {
-		record.setModifiedBy(null);
+		String userName = DummySession.currentUser != null ?
+				DummySession.currentUser.getUserName() : null;
+		record.setModifiedBy(userName);
 		record.setModifiedDate(new Date());
 	}
 
