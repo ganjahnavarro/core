@@ -45,9 +45,12 @@ public abstract class AbstractRepository<T> {
 	public IRecord persist(IRecord record) {
 		preProcess(record);
 		record.setDeleted(false);
-		
-		getSession().persist(record);
-		return record;
+		return (IRecord) persistPlainObject(record);
+	}
+	
+	public Object persistPlainObject(Object object) {
+		getSession().persist(object);
+		return object;
 	}
 
 	public IRecord merge(IRecord record) {

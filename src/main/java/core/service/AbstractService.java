@@ -38,8 +38,12 @@ public abstract class AbstractService {
 	}
 	
 	public IRecord save(IRecord record) {
+		return (IRecord) savePlainObject(record);
+	}
+	
+	public Object savePlainObject(Object object) {
 		try {
-			return getRepository().persist(record);
+			return getRepository().persistPlainObject(object);
 		} catch(ConstraintViolationException e) {
 			LOGGER.error("Error saving object", e);
 			throw e;
