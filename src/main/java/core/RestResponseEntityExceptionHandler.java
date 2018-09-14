@@ -1,5 +1,8 @@
 package core;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
@@ -21,6 +24,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	protected ResponseEntity<Object> handleConflict(RuntimeException exception, WebRequest request) {
 		String message = exception.getMessage();
 		
+		@SuppressWarnings("rawtypes")
+		List<Class> validExceptionClasses = Arrays.asList(IllegalArgumentException.class, IllegalStateException.class);
+		
 		if (exception instanceof ConstraintViolationException) {
 			message = "";
 			ConstraintViolationException validationException = (ConstraintViolationException) exception;
@@ -28,7 +34,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 			for (ConstraintViolation<?> violation : validationException.getConstraintViolations()) {
 				message += violation.getMessage() + ". ";
 			}
-		} else if (exception instanceof IllegalArgumentException) {
+		} else if (validExceptionClasses.contains(exception.getClass())) {
 			message = exception.getMessage();
 		} else {
 			String exceptionCode = exception.getClass().getSimpleName().replaceAll("[a-z]", "");
