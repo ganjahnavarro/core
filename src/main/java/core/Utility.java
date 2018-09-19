@@ -20,7 +20,6 @@ import org.springframework.validation.FieldError;
 public final class Utility implements ApplicationContextAware {
 
 	private static ApplicationContext context;
-	private static DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	public static ApplicationContext getApplicationContext() {
 		return context;
@@ -56,12 +55,14 @@ public final class Utility implements ApplicationContextAware {
 	}
 	
 	public static String formatDate(Date date) {
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		return dateFormat.format(date);
 	}
 	
 	public static Date parseDate(String dateString) {
 		try {
 			if (dateString != null && !dateString.isEmpty()) {
+				DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 				return dateFormat.parse(dateString);
 			}
 		} catch (ParseException e) {
@@ -72,11 +73,30 @@ public final class Utility implements ApplicationContextAware {
 	
 	public static Date getCurrentDateWithoutTime() {
 		Calendar calendar = Calendar.getInstance();
+		removeCalendarTime(calendar);
+		return calendar.getTime();
+	}
+	
+	public static Date removeDateTime(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		removeCalendarTime(calendar);
+		return calendar.getTime();
+	}
+	
+	public static Date getTomorrowWithoutDateTime(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		removeCalendarTime(calendar);
+		calendar.add(Calendar.DATE, 1);
+		return calendar.getTime();
+	}
+	
+	public static void removeCalendarTime(Calendar calendar) {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
-		return calendar.getTime();
 	}
 
 }

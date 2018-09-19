@@ -15,6 +15,9 @@ public abstract class Record implements Serializable, IRecord {
 
 	private Long id;
 
+	private String createdBy;
+	private Date createdDate;
+
 	private String modifiedBy;
 	private Date modifiedDate;
 
@@ -28,6 +31,22 @@ public abstract class Record implements Serializable, IRecord {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getModifiedBy() {

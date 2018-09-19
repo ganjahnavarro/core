@@ -2,9 +2,9 @@ package core.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Audited
 @Entity(name = Config.ENTITY_NAME)

@@ -60,10 +60,17 @@ public abstract class AbstractRepository<T> {
 	}
 	
 	protected void preProcess(IRecord record) {
+		Date today = new Date();
 		String userName = DummySession.currentUser != null ?
 				DummySession.currentUser.getUserName() : null;
+
 		record.setModifiedBy(userName);
-		record.setModifiedDate(new Date());
+		record.setModifiedDate(today);
+		
+		if (record.getCreatedBy() == null) {
+			record.setCreatedBy(userName);
+			record.setCreatedDate(today);
+		}
 	}
 
 	public void delete(IRecord record) {
