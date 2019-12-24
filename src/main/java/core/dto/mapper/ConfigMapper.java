@@ -8,21 +8,21 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import core.dto.UserData;
-import core.model.User;
+import core.dto.ConfigData;
+import core.model.Config;
 
 @Mapper
-public interface UserMapper {
+public interface ConfigMapper {
 	
-	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+	ConfigMapper INSTANCE = Mappers.getMapper(ConfigMapper.class);
 
 	@Mapping(target = "modifiedDate", source = "modifiedDate", dateFormat = "MM/dd/yyyy HH:mm")
-	UserData toData(User user);
+	ConfigData toData(Config config);
 	
 	@IterableMapping(dateFormat = "MM/dd/yyyy HH:mm")
-	List<UserData> toData(List<User> users);
+	List<ConfigData> toData(List<Config> configs);
 	
 	@InheritInverseConfiguration
-	User fromData(UserData userData);
+	Config fromData(ConfigData configData);
 
 }

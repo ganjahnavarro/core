@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MailService {
 	
-	@Autowired MailSender mailSender;
-	@Autowired TaskExecutor taskExecutor;
+	@Autowired private MailSender mailSender;
+	@Autowired private TaskExecutor taskExecutor;
 	
 	public void sendMail(String email, String subject, String body) throws Exception {
 		taskExecutor.execute(new Runnable() {

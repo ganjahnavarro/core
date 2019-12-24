@@ -33,12 +33,12 @@ import core.ControllerInterceptor;
 @EnableWebMvc
 @ComponentScan(basePackages = "core")
 public class AppConfig extends WebMvcConfigurerAdapter {
-	
+
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		argumentResolvers.add(authenticationPrincipalArgumentResolver());
 	}
-	
+
 	@Bean
 	public ViewResolver resourceBundleViewResolver() {
 		ResourceBundleViewResolver viewResolver = new ResourceBundleViewResolver();
@@ -56,16 +56,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setOrder(2);
 		return viewResolver;
 	}
-	
+
 	@Bean
-    public TaskExecutor taskExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(10);
-        executor.setMaxPoolSize(20);
-        executor.setQueueCapacity(50);
-        return executor;
-    }
-	
+	public TaskExecutor taskExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(10);
+		executor.setMaxPoolSize(20);
+		executor.setQueueCapacity(50);
+		return executor;
+	}
+
 	@Bean
 	public AuthenticationFailureHandler authenticationFailureHandler() {
 		ExceptionMappingAuthenticationFailureHandler handler = new ExceptionMappingAuthenticationFailureHandler();
@@ -75,27 +75,27 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		handler.setExceptionMappings(mapping);
 		return handler;
 	}
-	
+
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
-	    CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-	    
-	    long twentyMB = 20971520;
-	    int oneMB = 1048576;
-	    
-	    multipartResolver.setMaxUploadSize(twentyMB);
-	    multipartResolver.setMaxInMemorySize(oneMB);
-	    return multipartResolver;
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+
+		long twentyMB = 20971520;
+		int oneMB = 1048576;
+
+		multipartResolver.setMaxUploadSize(twentyMB);
+		multipartResolver.setMaxInMemorySize(oneMB);
+		return multipartResolver;
 	}
-	
+
 	@Bean
-	public JavaMailSenderImpl mailSender(){
+	public JavaMailSenderImpl mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
 		mailSender.setUsername("1applicationbot@gmail.com");
 		mailSender.setPassword("@pplicationbot");
-		
+
 		Properties properties = new Properties();
 		properties.setProperty("mail.transport.protocol", "smtp");
 		properties.setProperty("mail.smtp.auth", "true");
@@ -105,17 +105,17 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		mailSender.setJavaMailProperties(properties);
 		return mailSender;
 	}
-	
+
 	@Bean
-	public AuthenticationPrincipalArgumentResolver authenticationPrincipalArgumentResolver(){
+	public AuthenticationPrincipalArgumentResolver authenticationPrincipalArgumentResolver() {
 		return new AuthenticationPrincipalArgumentResolver();
 	}
-	
+
 	@Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-    }
-	
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+	}
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new ControllerInterceptor());

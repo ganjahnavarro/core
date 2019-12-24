@@ -15,7 +15,7 @@ import core.repository.UserRepository;
 @Transactional
 public class UserService extends AbstractService {
 
-	@Autowired UserRepository repository;
+	@Autowired private UserRepository repository;
 	
 	@Override
 	public AbstractRepository<User> getRepository() {
@@ -24,6 +24,10 @@ public class UserService extends AbstractService {
 	
 	public User findByUsername(String userName) {
 		return repository.findByUsername(userName);
+	}
+	
+	public User findByCredentials(String userName, String password) {
+		return repository.findByCredentials(userName, password);
 	}
 	
 	public void activateUser(String token) {

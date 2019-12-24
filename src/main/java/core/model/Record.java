@@ -18,6 +18,9 @@ public abstract class Record implements Serializable, IRecord {
 
 	private Long id;
 
+	private String createdBy;
+	private Date createdDate;
+
 	private String modifiedBy;
 	private Date modifiedDate;
 

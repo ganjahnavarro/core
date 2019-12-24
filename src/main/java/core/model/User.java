@@ -1,5 +1,6 @@
 package core.model;
 
+import java.beans.Transient;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Lob;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Entity(name = User.ENTITY_NAME)
 public class User extends Record {
 	
-	public static final String ENTITY_NAME = "applicationUser";
+	public static final String ENTITY_NAME = "userAccount";
 	private static final long serialVersionUID = 8438443391159451383L;
 
 	@NotNull(message = "Type is required.")
@@ -63,7 +63,6 @@ public class User extends Record {
 	private String imageFileName;
 	
 	private String confirmationToken;
-	
 	
 	@Transient
 	@Override

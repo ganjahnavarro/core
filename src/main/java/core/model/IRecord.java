@@ -8,6 +8,12 @@ public interface IRecord extends Serializable {
 	Long getId();
 	void setId(Long id);
 	
+	String getCreatedBy();
+	void setCreatedBy(String createdBy);
+	
+	Date getCreatedDate();
+	void setCreatedDate(Date createdDate);
+	
 	String getModifiedBy();
 	void setModifiedBy(String modifiedBy);
 	

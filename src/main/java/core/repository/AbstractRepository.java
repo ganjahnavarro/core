@@ -15,7 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import core.Utility;
+import core.DummySession;
 import core.model.IRecord;
 
 @Transactional
@@ -45,9 +45,12 @@ public abstract class AbstractRepository<T> {
 	public IRecord persist(IRecord record) {
 		preProcess(record);
 		record.setDeleted(false);
-		
-		getSession().persist(record);
-		return record;
+		return (IRecord) persistPlainObject(record);
+	}
+	
+	public Object persistPlainObject(Object object) {
+		getSession().persist(object);
+		return object;
 	}
 
 	public IRecord merge(IRecord record) {
@@ -57,8 +60,17 @@ public abstract class AbstractRepository<T> {
 	}
 	
 	protected void preProcess(IRecord record) {
-		record.setModifiedBy(Utility.getUser());
-		record.setModifiedDate(new Date());
+		Date today = new Date();
+		String userName = DummySession.currentUser != null ?
+				DummySession.currentUser.getUserName() : null;
+
+		record.setModifiedBy(userName);
+		record.setModifiedDate(today);
+		
+		if (record.getCreatedBy() == null) {
+			record.setCreatedBy(userName);
+			record.setCreatedDate(today);
+		}
 	}
 
 	public void delete(IRecord record) {
