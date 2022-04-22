@@ -6,7 +6,7 @@
 	<version>0.0.1</version>
 
 	<properties>
-		<springframework.version>5.3.6</springframework.version>
+		<springframework.version>5.3.19</springframework.version>
 		<springframework.security.version>4.2.8.RELEASE</springframework.security.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<hibernate.validator.version>5.3.6.Final</hibernate.validator.version>
